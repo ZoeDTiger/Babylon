@@ -39,9 +39,73 @@
 #### 添加种子节点和持久对等节点
     cd $HOME~/.babylond/config
     vim config.toml
-
-    设置seeds：
+    设置seeds值：
     03ce5e1b5be3c9a81517d415f65378943996c864@18.207.168.204:26656,a5fabac19c732bf7d814cf22e7ffc23113dc9606@34.238.169.221:26656,ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@testnet-seeds.polkachu.com:20656
+
+    vim app.toml
+    设置btc-tag：bbn0
+
+#### 启动与检查节点
+    screen -S baby
+    babylond start
+
+    babylond status
+<img width="618" alt="微信截图_20230323165340" src="https://user-images.githubusercontent.com/100336530/227151630-08da75e3-5876-4d0b-b19c-58e2afaa302b.png">
+
+#### 创建帐号
+    babylond --keyring-backend test keys add <your-key-name>
+
+#### 加入Discord获得测试币，https://discord.com/invite/babylonchain
+    !faucet <your-address>
+
+#### 成为验证者
+##### 创建 BLS 密钥
+    验证者应在每个纪元结束时提交 BLS 签名。 为此，验证者需要有一个 BLS 密钥对来签署信息。创建 BLS 密钥后，需要重新启动节点加载密钥。
+    babylond create-bls-key <your-address>
+    
+##### 修改配置
+    vim ~/.babylond/config/client.toml
+    设置正在使用的keyring-backend：keyring-backend = "test"
+
+    vim ~/.babylond/config/app.toml
+    指定验证器提交BLS 签名交易的密钥的名称：key-name = "<your-key-name>"
+
+    vim ~/.babylond/config/config.toml
+    指定验证器在一个新的高度时提交区块之前需要等待多长时间才能开始：timeout_commit = "10s"
+
+##### 创建验证器
+    babylond tx checkpointing create-validator \
+    --amount="10000000ubbn" \
+    --pubkey=$(babylond tendermint show-validator) \
+    --moniker="My Validator" \
+    --chain-id=bbn-test1 \
+    --gas="auto" \
+    --gas-adjustment=1.2 \
+    --gas-prices="0.0025ubbn" \
+    --keyring-backend=test \
+    --from=<your-key-name> \
+    --commission-rate="0.10" \
+    --commission-max-rate="0.20" \
+    --commission-max-change-rate="0.01" \
+    --min-self-delegation="1"
+
+##### 验证验证节点
+    在Babylond只有在纪元结束后才能成为验证者。 对于测试网，一个纪元持续大约 30 分钟。要验证是否已成为验证人，请先找到验证人地址：
+    babylond keys show <your-key-name> -a --bech val
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
