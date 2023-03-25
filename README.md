@@ -60,7 +60,7 @@
     https://discord.com/invite/babylonchain
     
 ##### 进入频道接水
-    输入如下命令，钱包可使用终端命令生成，每天每次接水获得100ubbn
+    输入如下命令，钱包可使用终端命令生成，现测每个DC间隔5小时可再次领取，每次接水获得100ubbn
     
     !faucet <your-address>
     
