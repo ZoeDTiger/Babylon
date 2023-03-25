@@ -17,7 +17,7 @@
     go version
 
 ### 构建并安装Babylon
-#### 安装工具包
+#### 安装依赖包
     sudo apt install git build-essential ufw curl jq snapd --yes
 
 #### 源码构建
