@@ -100,6 +100,7 @@
 
 ##### 验证验证节点
     在Babylond只有在纪元结束后才能成为验证者。 对于测试网，一个纪元持续大约 30 分钟。要验证是否已成为验证人，请先找到验证人地址：
+    
     babylond keys show <your-key-name> -a --bech val
 
 
