@@ -55,8 +55,17 @@
 #### 创建帐号
     babylond --keyring-backend test keys add <your-key-name>
 
-#### 加入Discord获得测试币，https://discord.com/invite/babylonchain
+#### 获得测试币
+##### 加入Discord
+    https://discord.com/invite/babylonchain
+    
+##### 进入频道接水
+    输入如下命令，钱包可使用终端命令生成，每天每次接水获得100ubbn
+    
     !faucet <your-address>
+    
+<img width="777" alt="微信截图_20230325113634" src="https://user-images.githubusercontent.com/100336530/227689993-077b9389-0004-47a9-832d-a261e3996fef.png">
+
 
 #### 成为验证者
 ##### 创建 BLS 密钥
