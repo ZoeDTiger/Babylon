@@ -29,6 +29,8 @@
     sudo cp $HOME/go/bin/babylon /usr/local/bin.
 
 #### 初始化节点目录
+    babylond config keyring-backend test
+    babylond config chain-id bbn-test1
     babylond init $NODENAME --chain-id bbn-test1
 
 #### 获得创世文件
@@ -37,20 +39,27 @@
     mv genesis.json ~/.babylond/config/genesis.json
 
 #### 添加种子节点和持久对等节点
-    cd $HOME~/.babylond/config
-    vim config.toml
-    设置seeds值：
-    03ce5e1b5be3c9a81517d415f65378943996c864@18.207.168.204:26656,a5fabac19c732bf7d814cf22e7ffc23113dc9606@34.238.169.221:26656,ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@testnet-seeds.polkachu.com:20656
+    SEEDS="03ce5e1b5be3c9a81517d415f65378943996c864@18.207.168.204:26656,a5fabac19c732bf7d814cf22e7ffc23113dc9606@34.238.169.221:26656"
+    PEERS="88bed747abef320552d84d02947d0dd2b6d9c71c@babylon-testnet.nodejumper.io:44656"
+    sed -i 's|^seeds *=.*|seeds = "'$SEEDS'"|; s|^persistent_peers *=.*|persistent_peers = "'$PEERS'"|' $HOME/.babylond/config/config.toml
+    sed -i 's|^prometheus *=.*|prometheus = true|' $HOME/.babylond/config/config.toml
+    
+    sed -i 's|^pruning *=.*|pruning = "custom"|g' $HOME/.babylond/config/app.toml
+    sed -i 's|^pruning-keep-recent  *=.*|pruning-keep-recent = "100"|g' $HOME/.babylond/config/app.toml
+    sed -i 's|^pruning-interval *=.*|pruning-interval = "10"|g' $HOME/.babylond/config/app.toml
+    sed -i 's|^snapshot-interval *=.*|snapshot-interval = 0|g' $HOME/.babylond/config/app.toml
+    sed -i 's|^minimum-gas-prices *=.*|minimum-gas-prices = "0.0001ubbn"|g' $HOME/.babylond/config/app.toml
+    sed -i 's|^network *=.*|network = "mainnet"|g' $HOME/.babylond/config/app.toml
+    sed -i 's|^checkpoint-tag *=.*|checkpoint-tag = "bbn0"|g' $HOME/.babylond/config/app.toml
 
-    vim app.toml
-    设置btc-tag：bbn0
-
-#### 启动与检查节点
+#### 启动与检查节点    
     screen -S baby
     babylond start
 
     babylond status
 <img width="618" alt="微信截图_20230323165340" src="https://user-images.githubusercontent.com/100336530/227151630-08da75e3-5876-4d0b-b19c-58e2afaa302b.png">
+
+    babylond status 2>&1 | jq .SyncInfo
 
 #### 创建帐号
     babylond --keyring-backend test keys add <your-key-name>
@@ -66,11 +75,13 @@
     
 <img width="777" alt="微信截图_20230325113634" src="https://user-images.githubusercontent.com/100336530/227689993-077b9389-0004-47a9-832d-a261e3996fef.png">
 
+    查询帐户余额：
+    babylond q bank balances $(babylond keys show 钱包名称 -a)
 
 #### 成为验证者
 ##### 创建 BLS 密钥
     验证者应在每个纪元结束时提交 BLS 签名。 为此，验证者需要有一个 BLS 密钥对来签署信息。创建 BLS 密钥后，需要重新启动节点加载密钥。
-    babylond create-bls-key <your-address>
+    babylond create-bls-key $(babylond keys show 钱包名称 -a)
     
 ##### 修改配置
     vim ~/.babylond/config/client.toml
@@ -84,7 +95,7 @@
 
 ##### 创建验证器
     babylond tx checkpointing create-validator \
-    --amount="10000000ubbn" \
+    --amount="1000000ubbn" \
     --pubkey=$(babylond tendermint show-validator) \
     --moniker="My Validator" \
     --chain-id=bbn-test1 \
@@ -97,11 +108,11 @@
     --commission-max-rate="0.20" \
     --commission-max-change-rate="0.01" \
     --min-self-delegation="1"
+    -y
 
 ##### 验证验证节点
     在Babylond只有在纪元结束后才能成为验证者。 对于测试网，一个纪元持续大约 30 分钟。要验证是否已成为验证人，请先找到验证人地址：
-    
-    babylond keys show <your-key-name> -a --bech val
+    babylond q staking validator $(babylond keys show 钱包名称 --bech val -a)
 
 
 
