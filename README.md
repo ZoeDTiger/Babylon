@@ -99,15 +99,15 @@
     --pubkey=$(babylond tendermint show-validator) \
     --moniker="My Validator" \
     --chain-id=bbn-test-2 \
-    --gas="auto" \
+    --gas="100000" \
     --gas-adjustment=1.2 \
-    --gas-prices="0.0025ubbn" \
+    --gas-prices="0.003ubbn" \
     --keyring-backend=test \
     --from=<your-key-name> \
     --commission-rate="0.10" \
     --commission-max-rate="0.20" \
     --commission-max-change-rate="0.01" \
-    --min-self-delegation="1"
+    --min-self-delegation="1" \
     -y
 
 ##### 验证验证节点
