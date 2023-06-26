@@ -23,23 +23,23 @@
 #### 源码构建
     git clone https://github.com/babylonchain/babylon.git
     cd babylon
-    git checkout v0.5.0
+    git checkout v0.7.2
     make install
 
-    sudo cp $HOME/go/bin/babylon /usr/local/bin.
+    sudo cp $HOME/go/bin/babylon /usr/local/bin
 
 #### 初始化节点目录
     babylond config keyring-backend test
-    babylond config chain-id bbn-test1
-    babylond init $NODENAME --chain-id bbn-test1
+    babylond config chain-id bbn-test-2
+    babylond init $NODENAME --chain-id bbn-test-2
 
 #### 获得创世文件
-    wget https://github.com/babylonchain/networks/raw/main/bbn-test1/genesis.tar.bz2
+    wget https://github.com/babylonchain/networks/raw/main/bbn-test-2/genesis.tar.bz2
     tar -xjf genesis.tar.bz2 && rm genesis.tar.bz2
     mv genesis.json ~/.babylond/config/genesis.json
 
 #### 添加种子节点和持久对等节点
-    SEEDS="03ce5e1b5be3c9a81517d415f65378943996c864@18.207.168.204:26656,a5fabac19c732bf7d814cf22e7ffc23113dc9606@34.238.169.221:26656"
+    SEEDS="8da45f9ff83b4f8dd45bbcb4f850999637fbfe3b@seed0.testnet.babylonchain.io:26656,4b1f8a774220ba1073a4e9f4881de218b8a49c99@seed1.testnet.babylonchain.io:26656"
     PEERS="88bed747abef320552d84d02947d0dd2b6d9c71c@babylon-testnet.nodejumper.io:44656"
     sed -i 's|^seeds *=.*|seeds = "'$SEEDS'"|; s|^persistent_peers *=.*|persistent_peers = "'$PEERS'"|' $HOME/.babylond/config/config.toml
     sed -i 's|^prometheus *=.*|prometheus = true|' $HOME/.babylond/config/config.toml
@@ -54,7 +54,7 @@
 
 #### 启动与检查节点    
     screen -S baby
-    babylond start
+    babylond start --x-crisis-skip-assert-invariants
 
     babylond status
 <img width="618" alt="微信截图_20230323165340" src="https://user-images.githubusercontent.com/100336530/227151630-08da75e3-5876-4d0b-b19c-58e2afaa302b.png">
