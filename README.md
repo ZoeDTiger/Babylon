@@ -98,7 +98,7 @@
     --amount="1000000ubbn" \
     --pubkey=$(babylond tendermint show-validator) \
     --moniker="My Validator" \
-    --chain-id=bbn-test1 \
+    --chain-id=bbn-test-2 \
     --gas="auto" \
     --gas-adjustment=1.2 \
     --gas-prices="0.0025ubbn" \
