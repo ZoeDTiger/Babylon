@@ -114,9 +114,11 @@
     在Babylond只有在纪元结束后才能成为验证者。 对于测试网，一个纪元持续大约 30 分钟。要验证是否已成为验证人，请先找到验证人地址：
     babylond q staking validator $(babylond keys show 钱包名称 --bech val -a)
 
+##### 转账
+    babylond tx bank send $from_address $to_address $额度ubbn --gas 80000 --fees 300ubbn -y
 
-
-
+##### 增加质押
+    babylond tx staking delegate $Validator_Address $额度ubbn --from $WALLET --fess 300ubbn -y
 
 
 
