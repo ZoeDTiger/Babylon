@@ -120,7 +120,8 @@
 ##### 增加质押
     babylond tx epoching delegate $Validator_Address $额度ubbn --from $WALLET --fe8s 300ubbn --gas 80000 -y
 
-
+##### 解禁
+    babylond tx slashing unjail --chain-id=bbn-test-2 --from=$WALLET --fees 300ubbn --gas 80000 -y
 
 
 
