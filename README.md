@@ -118,7 +118,7 @@
     babylond tx bank send $from_address $to_address $额度ubbn --gas 80000 --fees 300ubbn -y
 
 ##### 增加质押
-    babylond tx staking delegate $Validator_Address $额度ubbn --from $WALLET --fe8s 300ubbn --gas 80000 -y
+    babylond tx epoching delegate $Validator_Address $额度ubbn --from $WALLET --fe8s 300ubbn --gas 80000 -y
 
 
 
