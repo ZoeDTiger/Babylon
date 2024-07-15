@@ -3,7 +3,7 @@
 
 ### 安装 Golang
     cd $HOME
-    wget "https://go.dev/dl/go1.19.4.linux-amd64.tar.gz"
+    wget https://go.dev/dl/go1.22.5.linux-amd64.tar.gz
     sudo rm -rf /usr/local/go
     sudo tar -C /usr/local -zxvf go1.19.4.linux-amd64.tar.gz
 
